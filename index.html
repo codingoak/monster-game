@@ -31,7 +31,7 @@
       </section>
       <section id="controls">
         <button @click="attackMonster">ATTACK</button>
-        <button @click="">SPECIAL ATTACK</button>
+        <button @click="specialAttackMonster" :disabled="mayUseSpecialAttack">SPECIAL ATTACK</button>
         <button @click="">HEAL</button>
         <button @click="">SURRENDER</button>
       </section>
