@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="app.js" defer></script>
   </head>
+
   <body>
     <header>
       <h1>Monster Slayer</h1>
@@ -34,16 +35,35 @@
         <h3 v-if="winner === 'monster'">You lost!</h3>
         <h3 v-else-if="winner === 'player'">You won!</h3>
         <h3 v-else>It's a draw!</h3>
+        <button @click="startGame">Start a new game</button>
       </section>
-      <section id="controls">
+      <section v-else id="controls">
         <button @click="attackMonster">ATTACK</button>
-        <button @click="specialAttackMonster" :disabled="mayUseSpecialAttack">SPECIAL ATTACK</button>
+        <button @click="specialAttackMonster" :disabled="mayUseSpecialAttack">
+          SPECIAL ATTACK
+        </button>
         <button @click="healPlayer" :disabled="mayUseHealPlayer">HEAL</button>
-        <button @click="">SURRENDER</button>
+        <button @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="logMessage in logMessages">
+            <span
+              :class="{'log--player': logMessage.actionBy === 'player', 'log--monster': logMessage.actionBy === 'monster'}"
+              >{{ logMessage.actionBy === 'player' ? 'Player' : 'Monster'
+              }}</span
+            >
+            <span v-if="logMessage.actionType === 'heal'">
+              heals himself for
+              <span class="log--heal">{{ logMessage.actionValue }}</span></span
+            >
+            <span v-else>
+              attacks and deals
+              <span class="log--damage">{{ logMessage.actionValue }}</span>
+            </span>
+          </li>
+        </ul>
       </section>
     </div>
   </body>
